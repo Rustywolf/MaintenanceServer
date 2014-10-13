@@ -10,16 +10,16 @@ public class ServerGUI extends javax.swing.JFrame {
 
     private Server server;
     private Thread serverThread;
-    
+
     private Pattern numbersOnly = Pattern.compile("[^0-9]");
-    
+
     public ServerGUI() {
         initComponents();
-        
+
         Config.load();
         updateConfigText();
-        
-        DefaultCaret caret = (DefaultCaret)msgConsole.getCaret();
+
+        DefaultCaret caret = (DefaultCaret) msgConsole.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
@@ -27,18 +27,18 @@ public class ServerGUI extends javax.swing.JFrame {
         StringWriter writer = new StringWriter();
         PrintWriter printer = new PrintWriter(writer);
         e.printStackTrace(printer);
-        
+
         msgConsole.append(writer.toString());
     }
-    
+
     public void print(String string) {
         msgConsole.append(string);
     }
-    
+
     public void println(String string) {
         msgConsole.append(string + System.lineSeparator());
     }
-    
+
     public void updateConfigText() {
         this.textDescription.setText(Config.description.replace('§', '&'));
         this.textDisconnectionMessage.setText(Config.disconnectMessage.replace('§', '&'));
@@ -46,7 +46,7 @@ public class ServerGUI extends javax.swing.JFrame {
         this.textProtocol.setText(String.valueOf(Config.versionProtocol));
         this.textVersion.setText(Config.versionName.replace('§', '&'));
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -70,6 +70,11 @@ public class ServerGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Maintainence Server"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         msgConsole.setColumns(20);
         msgConsole.setRows(5);
@@ -203,27 +208,27 @@ public class ServerGUI extends javax.swing.JFrame {
                 printException(e);
             }
         } else {
-            if (serverThread != null) {
+            if (server != null) {
                 try {
                     server.shutdown();
                 } catch (Exception e) {
                     printException(e);
                 }
-                
-                serverThread = null;
-                server = null;
             }
+
+            serverThread = null;
+            server = null;
         }
-        
+
         Server.isRunning = !Server.isRunning;
-        
+
         buttonServerController.setText((Server.isRunning ? "Stop" : "Start") + " Server");
     }//GEN-LAST:event_buttonServerControllerActionPerformed
 
     private void buttonReloadConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReloadConfigActionPerformed
         Config.load();
         updateConfigText();
-        
+
         println("Config reloaded succesfully!");
     }//GEN-LAST:event_buttonReloadConfigActionPerformed
 
@@ -234,7 +239,7 @@ public class ServerGUI extends javax.swing.JFrame {
             Config.playersMax = Integer.valueOf(this.textPlayerCount.getText());
             Config.versionProtocol = Integer.valueOf(this.textProtocol.getText());
             Config.versionName = TextUtil.toChatChar(this.textVersion.getText());
-            
+
             Config.save();
             println("Config updated succesfully!");
         } catch (NumberFormatException e) {
@@ -242,6 +247,19 @@ public class ServerGUI extends javax.swing.JFrame {
             println("Make sure the Version Protocl and Max Player Count are valid numbers!");
         }
     }//GEN-LAST:event_buttonSaveConfigActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (server != null) {
+            try {
+                server.shutdown();
+            } catch (Exception e) {
+                printException(e);
+            }
+        } 
+        
+        serverThread = null;
+        server = null;
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonReloadConfig;
