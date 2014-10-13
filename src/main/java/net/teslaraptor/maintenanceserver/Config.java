@@ -64,7 +64,7 @@ public class Config {
                 
                 scanner.close();
             } catch (Exception e) {
-                MaintenanceServer.gui.printException(e);
+                MaintenanceServer.printException(e);
             }
         }
     }
@@ -74,7 +74,7 @@ public class Config {
         try {
             if (!file.exists()) {
                 if (!file.createNewFile()) {
-                    MaintenanceServer.gui.println("There was an error creating the file.");
+                    MaintenanceServer.println("There was an error creating the file.");
                     return;
                 }
             }
@@ -97,7 +97,7 @@ public class Config {
 
             writer.close();
         } catch (Exception e) {
-            MaintenanceServer.gui.printException(e);
+            MaintenanceServer.printException(e);
         }
     }
     

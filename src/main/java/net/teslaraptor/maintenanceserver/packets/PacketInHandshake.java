@@ -47,7 +47,7 @@ public class PacketInHandshake {
             
             return new PacketInHandshake(protocolVersion, serverAddress, serverPort, state);
         } else {
-            MaintenanceServer.gui.println("Expected 0x00 Packet, received: " + packetId);
+            MaintenanceServer.println("Expected 0x00 Packet, received: " + packetId);
         }
         
         return null;

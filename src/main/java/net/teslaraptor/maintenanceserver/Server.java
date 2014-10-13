@@ -15,7 +15,7 @@ public class Server implements Runnable {
     public Server() throws IOException {
         serverSocket = new ServerSocket(Config.port);
         
-        MaintenanceServer.gui.println("Server initialized on port " + Config.port + ".");
+        MaintenanceServer.println("Server initialized on port " + Config.port + ".");
     }
     
     public void readConnection() throws IOException {
@@ -36,12 +36,12 @@ public class Server implements Runnable {
                 readConnection();
             } catch (SocketException e) {
                 if (e.getMessage().equals("socket closed")) {
-                    MaintenanceServer.gui.println("Socket forcefully closed.");
+                    MaintenanceServer.println("Socket forcefully closed.");
                 } else {
-                    MaintenanceServer.gui.printException(e);
+                    MaintenanceServer.printException(e);
                 }
             } catch (Exception e) {
-                MaintenanceServer.gui.printException(e);
+                MaintenanceServer.printException(e);
             }
         }
         
@@ -50,9 +50,9 @@ public class Server implements Runnable {
                 serverSocket.close();
             }
         } catch (Exception e) {
-            MaintenanceServer.gui.printException(e);
+            MaintenanceServer.printException(e);
         }
         
-        MaintenanceServer.gui.println("Server has been shutdown succesfully!");
+        MaintenanceServer.println("Server has been shutdown succesfully!");
     }
 }

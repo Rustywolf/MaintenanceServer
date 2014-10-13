@@ -43,24 +43,24 @@ public class Connection implements Runnable {
                 PacketOutPing pingOut = new PacketOutPing(ping.getPing());
                 PacketOutPing.write(dos, pingOut);
 
-                MaintenanceServer.gui.println("Ping complete to " + connection.getInetAddress().getHostAddress() + ":" + connection.getPort() + "!");
+                MaintenanceServer.println("Ping complete to " + connection.getInetAddress().getHostAddress() + ":" + connection.getPort() + "!");
             } else if (handshake.getState() == 2) {
                 
                 PacketOutDisconnect disconnect = new PacketOutDisconnect(Config.disconnectMessage);
                 PacketOutDisconnect.write(dos, disconnect);
-                MaintenanceServer.gui.println("Client attempted to connect from " + connection.getInetAddress().getHostAddress() + ":" + connection.getPort() + "." + System.lineSeparator() + "Sent disconnect message.");
+                MaintenanceServer.println("Client attempted to connect from " + connection.getInetAddress().getHostAddress() + ":" + connection.getPort() + "." + System.lineSeparator() + "Sent disconnect message.");
             } else {
                 
-                MaintenanceServer.gui.println("There was an unknown handshake form " + connection.getInetAddress().getHostAddress() + ":" + connection.getPort() + " (State " + handshake.getState() + ") ?!");
+                MaintenanceServer.println("There was an unknown handshake form " + connection.getInetAddress().getHostAddress() + ":" + connection.getPort() + " (State " + handshake.getState() + ") ?!");
             }
         } catch (Exception e) {
-            MaintenanceServer.gui.printException(e);
-            MaintenanceServer.gui.println("There was an error! Oh no!");
+            MaintenanceServer.printException(e);
+            MaintenanceServer.println("There was an error! Oh no!");
         } finally {
             try {
                 connection.close();
             } catch (Exception e) {
-                MaintenanceServer.gui.printException(e);
+                MaintenanceServer.printException(e);
             }
         }
     }

@@ -24,7 +24,7 @@ public class PacketInPing {
             long ping = dis.readLong();
             return new PacketInPing(ping);
         } else {
-            MaintenanceServer.gui.println("Expected 0x01 Packet, received: " + Integer.toHexString(packetId));
+            MaintenanceServer.println("Expected 0x01 Packet, received: " + Integer.toHexString(packetId));
         }
         
         return null;

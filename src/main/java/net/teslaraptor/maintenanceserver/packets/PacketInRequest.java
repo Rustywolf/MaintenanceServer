@@ -24,7 +24,7 @@ public class PacketInRequest {
         if (packetId == 0) {
             return new PacketInRequest(true);
         } else {
-            MaintenanceServer.gui.println("Expected 0x00 Packet, received: " + packetId);
+            MaintenanceServer.println("Expected 0x00 Packet, received: " + packetId);
         }
         
         return new PacketInRequest(false);
