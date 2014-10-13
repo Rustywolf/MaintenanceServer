@@ -7,16 +7,15 @@ import java.net.SocketException;
 
 public class Server implements Runnable {
     
-    public static final int port = 25565;
     public static boolean isRunning = false;
     
     private final ServerSocket serverSocket;
     private Socket connection;
     
     public Server() throws IOException {
-        serverSocket = new ServerSocket(port);
+        serverSocket = new ServerSocket(Config.port);
         
-        MaintenanceServer.gui.println("Server initialized on port " + port + ".");
+        MaintenanceServer.gui.println("Server initialized on port " + Config.port + ".");
     }
     
     public void readConnection() throws IOException {

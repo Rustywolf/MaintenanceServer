@@ -11,6 +11,8 @@ import net.teslaraptor.maintenanceserver.util.TextUtil;
 
 public class Config {
     
+    public static int port = 25565;
+    
     public static String disconnectMessage = TextUtil.toChatChar("&4The server is in maintainence mode&8!");
     
     public static String versionName = "1.7.4 - 1.8";
@@ -33,6 +35,10 @@ public class Config {
                     
                     if (args.length > 1) {
                         switch (args[0]) {
+                            case "port":
+                                port = Integer.valueOf(args[1]);
+                                break; 
+                                
                             case "disconnect-message":
                                 disconnectMessage = TextUtil.toChatChar(args[1]);
                                 break;
@@ -74,6 +80,9 @@ public class Config {
             }
             
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            writer.write("port=" + port);
+            writer.newLine();
+            writer.newLine();
             writer.write("disconnect-message=" + disconnectMessage.replace('§', '&'));
             writer.newLine();
             writer.newLine();
